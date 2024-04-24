@@ -3132,6 +3132,82 @@ None}, default: None
         if toolbar is not None:
             toolbar.update()
 
+    def set_figsize(self, w, h, forward=True):
+        # Redefinition of 'set_size_inches' function such that it alligns with Figure class __init__ parameters
+        self.set_size_inches(self, w, h=h, forward=forward)
+
+    def get_figsize(self):
+        # Return of figure width and height in terms of figsize to allign with Figure class __init__ parameters
+        print("Hello from:  get_figsize")
+        returned_figsize = [self.get_figwidth(), self.get_figheight()]
+        return returned_figsize
+
+    def set_facecolor(self, color):
+        # Recreate patch for figure with new facecolor
+        print("Hello from:  set_facecolor")
+        self.patch = Rectangle(
+            xy=(0, 0), width=1, height=1, visible=self.get_frameon(),
+            facecolor=color, edgecolor=self.get_edgecolor(), linewidth=self.get_linewidth(),
+            # Don't let the figure patch influence bbox calculation.
+            in_layout=False)
+
+    def get_facecolor(self):
+        # Return facecolor from the patch object
+        print("Hello from:  get_facecolor")
+        return self.patch.get_facecolor()
+
+    def set_edgecolor(self, color):
+        # Recreate patch for figure with new edgecolor
+        print("Hello from:  set_edgecolor")
+        self.patch = Rectangle(
+            xy=(0, 0), width=1, height=1, visible=self.get_frameon(),
+            facecolor=self.get_facecolor(), edgecolor=color, linewidth=self.get_linewidth(),
+            # Don't let the figure patch influence bbox calculation.
+            in_layout=False)
+
+    def get_edgecolor(self):
+        # Return edgecolor from patch object
+        print("Hello from:  get_edgecolor")
+        return self.patch.get_edgecolor()
+
+    def set_linewidth(self, width):
+        # Recreate patch for figure with new linewidth
+        print("Hello from:  set_linewidth")
+        self.patch = Rectangle(
+            xy=(0, 0), width=1, height=1, visible=self.get_frameon(),
+            facecolor=self.get_facecolor(), edgecolor=self.get_edgecolor(), linewidth=width,
+            # Don't let the figure patch influence bbox calculation.
+            in_layout=False)
+
+    def get_linewidth(self):
+        # Return linewidth from patch object
+        print("Hello from:  get_linewidth")
+        return self.patch.get_linewidth()
+    
+    def set_frameon(self, frameon):
+        # Recreate patch for figure with new frameon (visibility)
+        print("Hello from:  set_frameon")
+        self.patch = Rectangle(
+            xy=(0, 0), width=1, height=1, visible=frameon,
+            facecolor=self.get_facecolor(), edgecolor=self.get_edgecolor(), linewidth=self.get_linewidth(),
+            # Don't let the figure patch influence bbox calculation.
+            in_layout=False)
+
+    def get_frameon(self):
+        # Return frameon form patch
+        print("Hello from:  get_frameon")
+        return self.patch.get_visible()
+
+    def set_subplotpars(self, subplotpar):
+        # Reassign current subplotpar to new subplotbar
+        print("Hello from: set_subplotpars")
+        self.subplotpar = subplotpar
+
+    def get_subplotpars(self):
+        # Return the current state of subplotpars
+        print("Hello from: get_subplotpars")
+        return self.subplotpars
+
     @_finalize_rasterization
     @allow_rasterization
     def draw(self, renderer):
